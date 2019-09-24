@@ -39,7 +39,7 @@ This is to add a json log parser component that publishes logs in json format to
 - Apply change that will restart zookeeper and kafka pods automatically `oc apply -f install/cluster-operator/050-Deployment-strimzi-cluster-operator.yaml`
 
 ## Rolling upgrade from strimzi 0.9.0
-1. Navigate to Kafka home directory: `cd openshift/kafka/0.11.4`
+1. Navigate to Kafka home directory: `cd kafka/0.11.4`
 2. Backup cluster operator
     
         oc login -u admin

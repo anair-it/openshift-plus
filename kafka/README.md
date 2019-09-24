@@ -6,9 +6,8 @@
 - Update the image in __oc apply -f __install/cluster-operator/050-Deployment-strimzi-cluster-operator.yaml__
 - Apply change that will restart zookeeper and kafka pods automatically `oc apply -f install/cluster-operator/050-Deployment-strimzi-cluster-operator.yaml`
 
-## Install and upgrade
-- Install [0.9.0](0.9.0/README.md)
-- Install/upgrade [0.11.4](0.11.4/README.md)
+## Install
+- Deploy [0.11.4](0.11.4/README.md)
 
 ## Verify
 1. Verify that all pods are running fine and are healthy
