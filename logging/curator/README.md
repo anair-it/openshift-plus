@@ -37,7 +37,8 @@ This is the connection configuration file
 
 ### delete_indices.yml - Action file
 - This file will have rules on deleting indices. Add additional index deletion actions in this file. Avoid creating new files.
-- There are 2 actions in this file. 1st one is to delete Openshift project log indices based on _project._ index prefix. The 2nd action is to delete Openshift operational log indices based on _.operations_ index prefix.
+- Application indices older than 30 days are deleted
+- Kafka, Nifi and operational indices older than 30 days are deleted
 
 ## Run Curator
 To perform a test, update delete_indices.yml file with a  index prefix and reduced age. Run dry run command to verify the indices list in __/var/log/curator.log__. Once verified, revert delete_indices.yml to the actual configuration.
