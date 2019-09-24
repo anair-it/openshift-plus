@@ -2,7 +2,7 @@
 Boost your Openshift platform and take your microserivces to the next level of operability and visibility. These features are tested and proven on OKD and Openshift 3.10, 3.11
 
 ## Minishfit usage
-https://gist.github.com/anair-it/b68d428731d73914e5d756b1c748c9d3
+https://gist.github.com/anair-it/b1e43e6a0e9c134c385932988a9c80a9
 
 # Distributed Logging
 Openshift has built-in centralized logging using Elasticsearch Fluentd and Kibana (EFK). This EFK stack uses older versions of Elastic and Kibana with no alerting and security features. OpenDistro Elasticsearch provides free alerting, monitoring and security features and can be installed on a commodity hardware outside of Openshift platform. [Read more...](logging/README.md)
