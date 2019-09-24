@@ -1,4 +1,4 @@
-# Enhance Openshift container platform
+# Enhance Openshift/Kubernetes container platform
 Add more to the Openshift platform to take your systems to the next level of operability and visibility
 
 ## Prerequisite
@@ -14,9 +14,12 @@ Openshift has built-in centralized logging using Elasticsearch Fluentd and Kiban
 ## Distributed coordination
 Apache Zookeeper is the distributed coordination component that is used by Apache Kafka, Apache Storm, Apache Nifi, Apache Hadoop and many more. Install Kubernetes compliant version with json logging and could that can be used by business applications as well. [Read more...](zookeeper/README.md)
 
+## Distributed Tracing
+Coming soon...
+
 ## Distributed flow pipeline and service mesh
 Apache Nifi can be used as the glue and backbone for all microservices. Nifi provides service mesh capabilities, transformers, security, dynamic throttling. [Read more...](nifi/README.md)
 
 ## Monitoring
 - Deploy Grafana to visualize metrics and set alerts. [Read more...](monitoring/grafana/README.md)
-- Coming soon....Prometheus
+- Prometheus. Coming soon...
