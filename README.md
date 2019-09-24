@@ -1,7 +1,7 @@
 # Enhance Openshift/Kubernetes container platform
 Boost your Openshift platform and take your microserivces to the next level of operability and visibility. These features are tested and proven on OKD and Openshift 3.10, 3.11
 
-## Minishfit usage
+## Minishift usage
 https://gist.github.com/anair-it/b1e43e6a0e9c134c385932988a9c80a9
 
 # Distributed Logging
