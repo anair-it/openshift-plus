@@ -37,4 +37,3 @@ Logs will be streamed to STDOUT in json format that is easily consumable by logs
 1. Edit "PrometheusReportingTask" properties
   a. Add Prometheus PushGateway url
   b. Update "The job name" is the job name that will be displayed in Prometheus
-
