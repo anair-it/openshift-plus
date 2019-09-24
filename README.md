@@ -1,8 +1,5 @@
 # Enhance Openshift/Kubernetes container platform
-Add more to the Openshift platform to take your systems to the next level of operability and visibility
-
-## Prerequisite
-- RedHat Openshift Container platform. The below is tested on OKD and Openshift 3.10, 3.11
+Boost your Openshift platform and take your microserivces to the next level of operability and visibility. These features are tested and proven on OKD and Openshift 3.10, 3.11
 
 ## Distributed Logging
 Openshift has built-in centralized logging using Elasticsearch Fluentd and Kibana (EFK). This EFK stack uses older versions of Elastic and Kibana with no alerting and security features. OpenDistro Elasticsearch provides free alerting, monitoring and security features and can be installed on a commodity hardware outside of Openshift platform. [Read more...](logging/README.md)
