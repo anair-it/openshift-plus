@@ -1,0 +1,19 @@
+---
+client:
+  hosts: {{HOSTNAME}}
+  port: 9200
+  url_prefix:
+  use_ssl: true
+  certificate: /etc/elasticsearch/root-ca.pem
+  client_cert:
+  client_key:
+  ssl_no_validate: True
+  http_auth: curator:{{PASSWORD}}
+  timeout: 30
+  master_only: True
+
+logging:
+  loglevel: INFO
+  logfile: /var/log/curator.log
+  logformat: default
+  blacklist: ['elasticsearch', 'urllib3']

@@ -1,0 +1,33 @@
+# You may not use this file except in compliance with the License.
+# A copy of the License is located at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# or in the "license" file accompanying this file. This file is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language governing
+# permissions and limitations under the License.
+
+# Description:
+# Default Kibana configuration for Open Distro.
+server.host: 0.0.0.0
+server.port: 5601
+elasticsearch.hosts: ["https://ES_HOSTNAME_1:9200","https://ES_HOSTNAME_2:9200","https://ES_HOSTNAME_3:9200"]
+elasticsearch.ssl.verificationMode: full
+elasticsearch.username: {USERNAME}
+elasticsearch.password: {PASSWORD}
+elasticsearch.requestHeadersWhitelist: ["securitytenant","Authorization"]
+elasticsearch.ssl.certificateAuthorities: ["/etc/kibana/cert/root-ca.pem"]
+opendistro_security.multitenancy.enabled: false
+opendistro_security.multitenancy.tenants.preferred: ["Private", "Global"]
+opendistro_security.readonly_mode.roles: ["kibana_read_only"]
+server.ssl.enabled: true
+server.ssl.key: /etc/kibana/cert/private.key
+server.ssl.certificate: /etc/kibana/cert/server.pem
+
+# *** SAML integration (Eg: Okta) *** #
+opendistro_security.auth.type: "saml"
+server.xsrf.whitelist: ["/_opendistro/_security/saml/acs/idpinititated", "/_opendistro/_security/saml/acs"]
+
+# *** Basic auth settings *** #
+#opendistro_security.auth.type: "basicauth"

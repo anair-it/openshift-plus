@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: List
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: kafka-manager
+  spec:
+    selector:
+      app: kafka-manager
+    ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: 9000
+      
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: kafka-manager
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: kafka-manager
+    template:
+      metadata:
+        labels:
+          app: kafka-manager
+      spec:
+        containers:
+        - name: kafka-manager
+          image: solsson/kafka-manager@sha256:9da595ecbb733074a1d3c6091a1e0c384da4f4e1f19f4e16276062278da8e592
+          ports:
+          - containerPort: 9000
+          env:
+          - name: ZK_HOSTS
+            value: zoo-entrance.{{ZOOKEEPER_ENTRANCE_NAMESPACE}}.svc:2181
+          - name: KAFKA_MANAGER_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: kafka.manager.creds
+          - name: KAFKA_MANAGER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: kafka.manager.creds
+          - name: KAFKA_MANAGER_AUTH_ENABLED
+            value: 'true'
+          command:
+          - ./bin/kafka-manager
+          volumeMounts:
+          - mountPath: /opt/kafka-manager/conf/application.conf
+            name: kafka-manager-application-conf
+            subPath: application.conf
+        volumes:
+          - configMap:
+              defaultMode: 420
+              name: kafka.manager.application.conf
+            name: kafka-manager-application-conf

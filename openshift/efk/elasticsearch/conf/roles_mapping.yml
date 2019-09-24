@@ -1,0 +1,17 @@
+# Define cusome roles mapping here
+
+all_access:
+  reserved: false
+  backend_roles:
+  - "KibanaAdmin"
+  users:
+  - "curator"
+  description: "Maps admin to all_access"
+
+
+openshift:
+  reserved: false
+  users:
+  - "fluentd"
+  description: "Maps openshift user"
+

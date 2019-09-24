@@ -1,0 +1,64 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: grafana
+  name: grafana
+  namespace: cluster-monitoring
+spec:
+  replicas: 1
+  selector:
+    app: grafana
+    deploymentconfig: grafana
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: grafana
+        deploymentconfig: grafana
+    spec:
+      containers:
+        - image: 'grafana/grafana'
+          imagePullPolicy: Always
+          name: grafana
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /root/go/src/github.com/grafana/grafana/data
+              name: grafana-data
+            - mountPath: /usr/share/grafana/conf
+              name: grafana-ini
+            - mountPath: /var/lib/grafana
+              name: grafana-plugins
+              subPath: grafana
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - emptyDir: {}
+          name: grafana-data
+        - name: grafana-plugins
+          persistentVolumeClaim:
+            claimName: grafana-data
+        - configMap:
+            defaultMode: 420
+            name: grafana-ini
+          name: grafana-ini
+  test: false
+  triggers:
+    - type: ConfigChange

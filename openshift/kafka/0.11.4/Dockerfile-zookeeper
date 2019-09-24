@@ -1,0 +1,5 @@
+FROM strimzi/zookeeper:0.11.4-kafka-2.0.0
+MAINTAINER Anoop Nair
+
+COPY ./extra_lib/log4j-json-layout-1.0.0.jar /opt/kafka/libs
+CMD ["/opt/kafka/zookeeper_run.sh"]

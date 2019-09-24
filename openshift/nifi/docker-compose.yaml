@@ -1,0 +1,13 @@
+version: "3"
+services:
+  nifi:
+    container_name: nifi
+    build: .
+    image: anair/nifi-base:1.9.2-1
+    restart: always
+    ports:
+      - 28080:8080
+    volumes:
+      - ./conf/logback.xml:/opt/nifi/conf/logback.xml
+    environment: 
+      BANNER_TEXT: anair k8s Nifi

@@ -1,0 +1,153 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: nifi
+  name: nifi
+  namespace: anair-nifi
+spec:
+  podManagementPolicy: Parallel
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: nifi
+  serviceName: nifi
+  template:
+    metadata:
+      labels:
+        app: nifi
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - nifi
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - args:
+            - cd /opt/nifi && ./run.sh && date
+          command:
+            - /bin/sh
+            - '-c'
+          env:
+            - name: ZK_NODES_LIST
+              value: >-
+                zk-0.zk-hs.anair-nifi.svc.cluster.local,zk-1.zk-hs.anair-nifi.svc.cluster.local,zk-2.zk-hs.anair-nifi.svc.cluster.local
+            - name: ZK_MONITOR_PORT
+              value: '2888'
+            - name: IS_CLUSTER_NODE
+              value: 'yes'
+            - name: BANNER_TEXT
+              value: K8s Nifi Cluster
+            - name: VERSION
+              value: 0515201901
+          image: 'docker-registry.default.svc:5000/anair-nifi/nifi:1.9.2-1'
+          imagePullPolicy: Always
+          name: nifi
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8081
+              protocol: TCP
+            - containerPort: 8443
+              protocol: TCP
+            - containerPort: 2882
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /opt/nifi/run.sh
+              name: runconfig
+              subPath: run.sh
+            - mountPath: /opt/nifi/flowfile_repository
+              name: flowfilerepository
+            - mountPath: /opt/nifi/database_repository
+              name: databaserepository
+            - mountPath: /opt/nifi/content_repository
+              name: contentrepository
+            - mountPath: /opt/nifi/provenance_repository
+              name: provenancerepository
+            - mountPath: /opt/nifi/conf
+              name: conf
+            - mountPath: /opt/nifi/conf/logback.xml
+              name: logback
+              subPath: logback.xml
+            - mountPath: /opt/certfiles
+              name: certfiles-volume
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        runAsUser: 0
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - configMap:
+            defaultMode: 448
+            name: nifi-bootstrap
+          name: runconfig
+        - configMap:
+            defaultMode: 420
+            name: nifi-conf
+          name: logback
+        - name: certfiles-volume
+          persistentVolumeClaim:
+            claimName: certfiles
+  updateStrategy:
+    type: RollingUpdate
+  volumeClaimTemplates:
+    - metadata:
+        creationTimestamp: null
+        name: flowfilerepository
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: glusterfs-storage
+    - metadata:
+        creationTimestamp: null
+        name: databaserepository
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: glusterfs-storage
+    - metadata:
+        creationTimestamp: null
+        name: contentrepository
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: glusterfs-storage
+    - metadata:
+        creationTimestamp: null
+        name: provenancerepository
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: glusterfs-storage
+    - metadata:
+        creationTimestamp: null
+        name: conf
+      spec:
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: glusterfs-storage

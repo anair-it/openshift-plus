@@ -1,0 +1,10 @@
+
+fluentd:
+  hash: ""
+  reserved: true
+  description: "User id used in Openshift fluentd"
+
+curator:
+  hash: ""
+  reserved: false
+  description: "User id used by Curator"
