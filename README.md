@@ -22,4 +22,4 @@ Apache Nifi can be used as the glue and backbone for all microservices. Nifi pro
 
 # Monitoring
 - Deploy Grafana to visualize metrics and set alerts. [Read more...](monitoring/grafana/README.md)
-- Prometheus. Coming soon...
+- Prometheus Operator [Read more...](https://operatorhub.io/operator/prometheus)
