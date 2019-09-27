@@ -23,7 +23,7 @@ spec:
       class: glusterfs-storage
     logging:
       type: external
-      name: anair-kafka-cluster-kafka-config
+      name: anair-kafka-cluster-custom-kafka-config
     metrics:
       lowercaseOutputName: true
       rules:
@@ -128,7 +128,7 @@ spec:
       class: glusterfs-storage
     logging:
       type: external
-      name: anair-kafka-cluster-kafka-config
+      name: anair-kafka-cluster-custom-kafka-config
     metrics:
       lowercaseOutputName: true
       rules:

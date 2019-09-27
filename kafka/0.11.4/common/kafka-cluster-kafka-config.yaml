@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  log4j.properties: >-
+    log4j.rootLogger=ERROR, CONSOLE
+
+    log4j.appender.CONSOLE.layout=com.github.szhem.logstash.log4j.LogStashJsonLayout
+
+    log4j.logger.kafka.authorizer.logger=INFO
+
+    log4j.logger.kafka.network.Processor=false
+
+    log4j.logger.kafka.request.logger=ERROR, CONSOLE
+
+    log4j.logger.kafka.controller=TRACE
+
+    log4j.logger.kafka.network.RequestChannel$=WARN
+
+    log4j.logger.org.apache.zookeeper=ERROR
+
+    log4j.logger.state.change.logger=TRACE
+
+    log4j.logger.org.I0Itec.zkclient.ZkClient=ERROR
+
+    log4j.logger.kafka.server.KafkaApis=false
+
+    log4j.logger.org.apache.kafka=ERROR
+
+    kafka.root.logger.level=ERROR
+
+    log4j.logger.kafka=ERROR
+
+    log4j.logger.kafka.log.LogCleaner=ERROR
+
+    log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender
+metadata:
+  name: anair-kafka-cluster-custom-kafka-config
+  namespace: anair-kafka

@@ -20,7 +20,7 @@ spec:
       type: ephemeral
     logging:
       type: external
-      name: anair-kafka-cluster-kafka-config
+      name: anair-kafka-cluster-custom-kafka-config
     tlsSidecar:
       resources:
         requests:
@@ -123,7 +123,7 @@ spec:
       type: ephemeral
     logging:
       type: external
-      name: anair-kafka-cluster-kafka-config
+      name: anair-kafka-cluster-custom-kafka-config
     metrics:
       lowercaseOutputName: true
       rules:

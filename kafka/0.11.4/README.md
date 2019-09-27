@@ -74,7 +74,7 @@ This is to add a json log parser component that publishes logs in json format to
 5. Install Kafka-cluster. Strimzi operator will first deploy a zookeeper cluster and then the kafka cluster
    - Openshift: `oc apply -f kafka-persistent.yaml`
    - Minishift: `oc apply -f kafka-ephemeral.yaml`
-6. Update config maps: `oc apply -f ../0.9.0/common`
+6. Update config maps: `oc apply -f common`
 1. Move onto next steps in [README.md](../README.md)
 
 ## Reference

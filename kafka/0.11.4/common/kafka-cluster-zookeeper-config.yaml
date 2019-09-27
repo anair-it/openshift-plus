@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  log4j.properties: >-
+    log4j.rootLogger=ERROR, CONSOLE
+
+    zookeeper.root.logger=ERROR
+
+    log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender
+
+    log4j.appender.CONSOLE.layout=com.github.szhem.logstash.log4j.LogStashJsonLayout
+metadata:
+  name: anair-kafka-cluster-custom-zookeeper-config
+  namespace: anair-kafka
