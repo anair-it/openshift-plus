@@ -37,29 +37,6 @@ This is to add a json log parser component that publishes logs in json format to
 ## Update only kafka and zookeeper images
 - Update the image in __oc apply -f __install/cluster-operator/050-Deployment-strimzi-cluster-operator.yaml__
 - Apply change that will restart zookeeper and kafka pods automatically `oc apply -f install/cluster-operator/050-Deployment-strimzi-cluster-operator.yaml`
-
-## Rolling upgrade from strimzi 0.9.0
-1. Navigate to Kafka home directory: `cd kafka/0.11.4`
-2. Backup cluster operator
-    
-        oc login -u admin
-        oc project anair-kafka
-        oc get all -l app=strimzi -o yaml > strimzi-backup.yaml
-3. Update namespace in all installation files. On Mac:
-   `sed -i '' 's/namespace: .*/namespace: anair-kafka/' install/cluster-operator/*RoleBinding*.yaml`
-4. Update __install/cluster-operator/050-Deployment-strimzi-cluster-operator.yaml__
-   1. Update STRIMZI_DEFAULT_ZOOKEEPER_IMAGE to the image tag `172.30.1.1:5000/anair-kafka/strimzi-zookeeper:0.11.4-2.0.0`
-   2. Update STRIMZI_KAFKA_IMAGES. Update 2.1.0 value to `2.1.0=172.30.1.1:5000/anair-kafka/strimzi-kafka:0.11.4-2.1.0`
-5. Update cluster operator: `oc apply -f install/cluster-operator`
-6. Verify cluster operator pod is running fine before moving on to next steps
-7. Rolling upgrade of Kafka-cluster. Strimzi operator will first deploy a zookeeper cluster and then the kafka cluster after 2 minutes
-    1. First install kafka version 2.0.0. Make sure __Kafka.spec.kafka.version__ is set to __2.0.0__ and __log.message.format.version__ is _2.0_
-         - Openshift: `oc apply -f kafka-persistent.yaml`
-         - Minishift: `oc apply -f kafka-ephemeral.yaml`
-    2. Wait for kafka pods to recreate and reconclie. Watch cluster-operator logs
-    3. Update kafka-persistent.yaml (for Openshift) or kafka-ephemeral.yaml (for Minishift). Change __Kafka.spec.kafka.version__ from _2.0.0_ to _2.1.0_ and apply the config using the above command. Optionally update __log.message.format.version__ to _2.1_
-    4. Wait for kafka pods to recreate and reconclie. Watch cluster-operator logs
-    5. Move onto next steps in [README.md](../README.md)
    
 ## New Install
 1. Update __install/cluster-operator/050-Deployment-strimzi-cluster-operator.yaml__ with the custom kafka and zookeeper image
@@ -75,7 +52,7 @@ This is to add a json log parser component that publishes logs in json format to
    - Openshift: `oc apply -f kafka-persistent.yaml`
    - Minishift: `oc apply -f kafka-ephemeral.yaml`
 6. Update config maps: `oc apply -f common`
-1. Move onto next steps in [README.md](../README.md)
+7. Move onto next steps in [README.md](../README.md)
 
 ## Reference
 [Strimzi Kafka 0.11.4](https://strimzi.io/docs/0.11.4/)
