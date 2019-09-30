@@ -15,7 +15,7 @@ Openshift has built-in centralized logging using Elasticsearch Fluentd and Kiban
 Apache Zookeeper is the distributed coordination component that is used by Apache Kafka, Apache Storm, Apache Nifi, Apache Hadoop and many more. Install Kubernetes compliant version with json logging and could that can be used by business applications as well. [Read more...](zookeeper/README.md)
 
 # Distributed Tracing
-Coming soon...
+Trace traffic across microservices using Jaeger. Install using the [jaeger operator](https://github.com/jaegertracing/jaeger-operator)
 
 # Distributed flow pipeline and service mesh
 Apache Nifi can be used as the glue and backbone for all microservices. Nifi provides service mesh capabilities, transformers, security, dynamic throttling. [Read more...](nifi/README.md)
