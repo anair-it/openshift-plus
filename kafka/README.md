@@ -42,11 +42,12 @@
 ### Consumer
 `kafka-console-consumer --bootstrap-server [BOOTSTRAP_HOSTNAME]:443 --topic anair --consumer.config client-ssl.properties --from-beginning`
 
-## Kafka cluster metrics
-1. Create route from service __[NAMESPACE]-cluster-kafka-bootstrap__
-2. Identify the hostname and prepend __anair-kafka-cluster-kafka-metrics__ to the hostname
+## Kafka,Zookeeper cluster metrics
+1. Create route from kafka service exposing port 9404
+2. Create route from zookeeper service exposing port 9404
 3. Enable Edge TLS termination
-4. Click on the new route to see raw metics data
+4. Click on the new routes to see raw metics data
+5. Ensure that these urls are configured in prometheus.yaml to capture and visualze metrics
 
 ## Zookeeper entrance
 In order to have monitoring tools like Kafka Manager access access Strimzi kafka brokers and topics, it needs to access Strimzi kafka zookeeper. This version of zookeeper is secured and cannot be accessed by Kafka Manager. To overcome this, Jakob Schulz (main committer of Strimzi) has created a backdoor unsecured access to the same zookeeper cluster. Run below steps in every strimzi kafka cluster
@@ -60,7 +61,7 @@ In order to have monitoring tools like Kafka Manager access access Strimzi kafka
 ### Rolling restart
 Restart will be initiated by the cluster operator in 2 minutes
 - [Zookeeper](https://strimzi.io/docs/0.11.4/#proc-manual-rolling-update-zookeeper-deployment-configuration-kafka): `oc annotate statefulset [NAMESPACE]-cluster-zookeeper operator.strimzi.io/manual-rolling-update=true`
-- [Kafka](https://strimzi.io/docs/0.11.4/#proc-manual-rolling-update-kafka-deployment-configuration-kafka): `oc annotate statefulset [NAMESAPCE]-cluster-kafka operator.strimzi.io/manual-rolling-update=true`
+- [Kafka](https://strimzi.io/docs/0.11.4/#proc-manual-rolling-update-kafka-deployment-configuration-kafka): `oc annotate statefulset [NAMESPACE]-cluster-kafka operator.strimzi.io/manual-rolling-update=true`
 
 ### Scaling brokers
 https://strimzi.io/docs/0.11.4/#scaling-clusters-deployment-configuration-kafka
