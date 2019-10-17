@@ -50,3 +50,7 @@ Logs will be streamed to STDOUT in json format that is easily consumable by logs
 - [Encryption at rest on Provenance](https://nifi.apache.org/docs/nifi-docs/html/administration-guide.html#encrypted-write-ahead-provenance-repository-properties)
 - [User Authentication](https://nifi.apache.org/docs/nifi-docs/html/administration-guide.html#user_authentication)
 - [User Authorization](https://nifi.apache.org/docs/nifi-docs/html/administration-guide.html#multi-tenant-authorization)
+
+## Reference
+- [Rest API](https://nifi.apache.org/docs/nifi-docs/rest-api/index.html)
+- [How Nifi works](https://www.freecodecamp.org/news/nifi-surf-on-your-dataflow-4f3343c50aa2/)
