@@ -1,5 +1,5 @@
 # Apache Nifi
-Deploy custom Kubernetes compliant [Apache Nifi](https://nifi.apache.org/) 3 node cluster with added features:
+Deploy custom [Apache Nifi](https://nifi.apache.org/) 3 node cluster on Kubernetes platform with added features:
 - Logstash/Fluentd json logging support
 - [Prometheus reporting task](https://github.com/mkjoerg/nifi-prometheus-reporter/). Publish Nifi JVM and flow metrics to Prometheus Push gateway 
 
@@ -7,12 +7,12 @@ Deploy custom Kubernetes compliant [Apache Nifi](https://nifi.apache.org/) 3 nod
 
 ## Deploy to Openshift
 1. Build __anair/nifi-base:1.9.2-1__ base image locally
-1. Decide namespace to deploy
-1. Login to  Openshift docker registry
-1. Tag image with openshift namespace
-1. Push image to openshift project
-1. Create configMap _nifi-conf_ with logback.xml entry. Copy the contents of _conf?logback.xml_
-1. Open and review the 3 node [statefulset](k8s/nifi-statefulset.yaml)     
+2. Decide namespace to deploy
+3. Login to  Openshift docker registry
+4. Tag image with openshift namespace
+5. Push image to openshift project
+6. Create configMap _nifi-conf_ with logback.xml entry. Copy the contents of _conf?logback.xml_
+7. Open and review the 3 node [statefulset](k8s/nifi-statefulset.yaml)     
   a. Update image name        
   b. Update namespace     
   c. Review mounts and PVCs     
@@ -27,6 +27,7 @@ Logs will be streamed to STDOUT in json format that is easily consumable by logs
 - Nifi bootstrap activity will set logtype as "bootstrap". This will happen on startup
 - User activity like accessing flows, stop/start flows will set logtype as "user"
 - Regular flow activity will set logtype as "app". This will be most logged type based on business activity
+- Import custom Nifi Kibana dashboards at _logging/kibana/visualization/nifi-error-by-pod.json_ to Kibana. Monitor errors by pod.
 
 ## Configure reporting task
 1. Click on "Controller Settings"
