@@ -42,3 +42,4 @@ Logs will be streamed to STDOUT in json format that is easily consumable by logs
 - Monitor CPU, memory and filesystem usage through an external monitroing system like Nagios, Zabbix
 - Cluster health: `curl -ks https://NIFI_HOST/nifi-api/flow/cluster/summary | grep -c "{\"clusterSummary\":{\"connectedNodes\":\"3 \/ 3\",\"connectedNodeCount\":3,\"totalNodeCount\":3,\"connectedToCluster\":true,\"clustered\":true}}"`. If response = 0, cluster is unhealthy.
 - Cluster JVM diagnostics: `curl -ks "http://NIFI_HOST/nifi-api/system-diagnostics"`
+- With Prometheus Reporting Task, Nifi JVM diagnostics are pushed to Prometheus and can be visualized in Grafana. Refer the attached Nifi Grafana dashboard in _monitoring/grafana/dashboard/nifi.json_
