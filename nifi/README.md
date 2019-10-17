@@ -12,7 +12,8 @@ Deploy custom [Apache Nifi](https://nifi.apache.org/) 3 node cluster on Kubernet
 4. Tag image with openshift namespace
 5. Push image to openshift project
 6. Create configMap _nifi-conf_ with logback.xml entry. Copy the contents of the custom _conf/logback.xml_ into the configmap with key as "logback.xml"
-7. Open and review the 3 node [statefulset](k8s/nifi-statefulset.yaml)     
+7. Create a Route/Ingress mapped to port 8080. This will be the external facing url. 
+8. Open and review the 3 node [statefulset](k8s/nifi-statefulset.yaml)     
   a. Update image name        
   b. Update namespace     
   c. Review mounts and PVCs     
