@@ -18,9 +18,9 @@ Deploy custom Kubernetes compliant [Apache Nifi](https://nifi.apache.org/) 3 nod
   c. Review mounts and PVCs
   d. Review and update zookeeper cluster nodes
   e. Update Cluster name
-  f. Set anti-affinity rules as required to make sure the Nifi nodes are running in different K8s worker nodes
-1. Deploy statefulset
-1. Verify logs and pod health
+  f. Review anti-affinity rule to make sure the Nifi nodes are running in different K8s worker nodes
+2. Deploy statefulset
+3. Verify logs and pod health
 
 ## Custom logging
 Logs will be streamed to STDOUT in json format that is easily consumable by logstash\fluentd. Log will have a new element called "logtype" which can be filtered in Kibana.
@@ -37,3 +37,8 @@ Logs will be streamed to STDOUT in json format that is easily consumable by logs
 1. Edit "PrometheusReportingTask" properties
   a. Add Prometheus PushGateway url
   b. Update "The job name" is the job name that will be displayed in Prometheus
+
+## Healthcheck
+- Monitor CPU, memory and filesystem usage through an external monitroing system like Nagios, Zabbix
+- Cluster health: `curl -ks https://NIFI_HOST/nifi-api/flow/cluster/summary | grep -c "{\"clusterSummary\":{\"connectedNodes\":\"3 \/ 3\",\"connectedNodeCount\":3,\"totalNodeCount\":3,\"connectedToCluster\":true,\"clustered\":true}}"`. If response = 0, cluster is unhealthy.
+- Cluster JVM diagnostics: `curl -ks "http://NIFI_HOST/nifi-api/system-diagnostics"`

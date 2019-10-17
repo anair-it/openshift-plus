@@ -63,3 +63,8 @@ Deploy OpenDistro Kibana in an external cluster outside of Openshift. You may sh
 ## Switch authentication
 - Switch authentication from SAML to basic auth by uncommenting the properties in the "Basic auth" section. Comment the SAML properties
 
+## Healthcheck
+- Monitor CPU, memory through an external monitroing system like Nagios, Zabbix
+- Healthcheck url: `curl -ksuI monitor:password https://KIBANA:5601 | grep -c 'HTTP/1.1 302 Found'`. 
+  - If response is 0, Kibana is unhealthy and create an alert.
+  - Update the hostname, userid and password as required

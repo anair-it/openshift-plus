@@ -80,7 +80,7 @@ Create Node level cert for each node individually
 Elasticsearch can be secured through Okta and the default internal database. Users like admin, kibanaserver, fluentd and curator are created in the internal database. The custom _config.yml_ will enable Okta integration and use of the internal database uers.
 
 ## Okta integration
-Okta integration is done through SAML 2.0. Work with the security team to enbale SAML integration.
+Okta integration is done through SAML 2.0. Work with the security team to enable SAML integration.
 
 - Refer [Opendistro SAML setup](https://opendistro.github.io/for-elasticsearch-docs/docs/security-configuration/saml/)
 - Refer saml authc configuration in _conf/config.yml_
@@ -145,3 +145,9 @@ Internal user files are at _/usr/share/elasticsearch/plugins/opendistro_security
 
         cd ../tools
         sudo ./securityadmin.sh -f ../securityconfig/roles_mapping.yml -icl -nhnv -nrhn -cert /etc/elasticsearch/admin.pem -cacert /etc/elasticsearch/root-ca.pem -key /etc/elasticsearch/admin-key.pem -t rolesmapping
+
+## Healthcheck
+- Monitor CPU, memory and file system usage through an external monitroing system like Nagios, Zabbix
+- Healthcheck url: `curl -ksu monitor:password https://ES_HOST:9200/_cat/health | grep -c 'green 5'`. 
+  - If response is 0, cluster is unhealthy and create an alert.
+  - Here the assumption is there is a 5 node elastic cluster with a userid as monitor. Update the count, hostname, userid and password as required
