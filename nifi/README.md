@@ -12,29 +12,29 @@ Deploy custom Kubernetes compliant [Apache Nifi](https://nifi.apache.org/) 3 nod
 1. Tag image with openshift namespace
 1. Push image to openshift project
 1. Create configMap _nifi-conf_ with logback.xml entry. Copy the contents of _conf?logback.xml_
-1. Open a 3 node [statefulset](k8s/nifi-statefulset.yaml)
-  a. Update image name
-  b. Update namespace
-  c. Review mounts and PVCs
-  d. Review and update zookeeper cluster nodes
-  e. Update Cluster name
-  f. Review anti-affinity rule to make sure the Nifi nodes are running in different K8s worker nodes
+1. Open and review the 3 node [statefulset](k8s/nifi-statefulset.yaml)     
+  a. Update image name        
+  b. Update namespace     
+  c. Review mounts and PVCs     
+  d. Review and update zookeeper cluster nodes       
+  e. Update Cluster name     
+  f. Review anti-affinity rule to make sure the Nifi nodes are running   in different K8s worker nodes     
 2. Deploy statefulset
 3. Verify logs and pod health
 
 ## Custom logging
-Logs will be streamed to STDOUT in json format that is easily consumable by logstash\fluentd. Log will have a new element called "logtype" which can be filtered in Kibana.
+Logs will be streamed to STDOUT in json format that is easily consumable by logstash\fluentd. Every log will have a custom attribute "logtype" which can be used as a filter and alert criteria in Kibana.
 - Nifi bootstrap activity will set logtype as "bootstrap". This will happen on startup
 - User activity like accessing flows, stop/start flows will set logtype as "user"
 - Regular flow activity will set logtype as "app". This will be most logged type based on business activity
 
 ## Configure reporting task
 1. Click on "Controller Settings"
-1. Click on "Reporting Tasks" tab
-1. Add new reporting task
-1. Type "prom" in the UI filter
-1. Select "PrometheusReportingTask" and click Add button
-1. Edit "PrometheusReportingTask" properties
+2. Click on "Reporting Tasks" tab
+3. Add new reporting task
+4. Type "prom" in the UI filter
+5. Select "PrometheusReportingTask" and click Add button
+6. Edit "PrometheusReportingTask" properties
   a. Add Prometheus PushGateway url
   b. Update "The job name" is the job name that will be displayed in Prometheus
 
