@@ -44,3 +44,9 @@ Logs will be streamed to STDOUT in json format that is easily consumable by logs
 - Cluster health: `curl -ks https://NIFI_HOST/nifi-api/flow/cluster/summary | grep -c "{\"clusterSummary\":{\"connectedNodes\":\"3 \/ 3\",\"connectedNodeCount\":3,\"totalNodeCount\":3,\"connectedToCluster\":true,\"clustered\":true}}"`. If response = 0, cluster is unhealthy.
 - Cluster JVM diagnostics: `curl -ks "http://NIFI_HOST/nifi-api/system-diagnostics"`
 - With Prometheus Reporting Task, Nifi JVM diagnostics are pushed to Prometheus and can be visualized in Grafana. Refer the attached Nifi Grafana dashboard in _monitoring/grafana/dashboard/nifi.json_
+
+## Security
+- [Encryption at motion](https://nifi.apache.org/docs/nifi-docs/html/administration-guide.html#encryption)
+- [Encryption at rest on Provenance](https://nifi.apache.org/docs/nifi-docs/html/administration-guide.html#encrypted-write-ahead-provenance-repository-properties)
+- [User Authentication](https://nifi.apache.org/docs/nifi-docs/html/administration-guide.html#user_authentication)
+- [User Authorization](https://nifi.apache.org/docs/nifi-docs/html/administration-guide.html#multi-tenant-authorization)
