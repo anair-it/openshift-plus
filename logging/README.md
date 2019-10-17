@@ -3,6 +3,14 @@ Openshift comes with its Opensource EFK stack that is versions behind the new EF
 The Opensource version of Elastic does not have security and alerting built into it for free, but the OpenDistro version from Amazon has all of that. 
 Follow the below steps to provision an external OpenDistro Elasticsearch and Kibana cluster. 
 
+## Design
+Review design (design/Centralized logging) on draw.io
+### High-level design
+![High-level design](design/Centralized&#32;logging&#32;-&#32;High&#32;level&#32;design.png)
+
+### Network design
+![Network design](design/Centralized&#32;logging&#32;-&#32;Network&#32;diagram.png)
+
 ## Prerequisite - Environment configuration
 ### Docker log settings
 https://docs.docker.com/config/containers/logging/configure/
