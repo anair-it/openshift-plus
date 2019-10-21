@@ -1,4 +1,4 @@
-# Distributed Logging using external EFK stack
+# Distributed Logging using external Elastic stack
 Openshift comes with its Opensource EFK stack that is versions behind the new EFK stack and has less features. There is no security and alerting features. 
 The Opensource version of Elastic does not have security and alerting built into it for free, but the OpenDistro version from Amazon has all of that. 
 Follow the below steps to provision an external OpenDistro Elasticsearch and Kibana cluster. 
