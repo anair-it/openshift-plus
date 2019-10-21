@@ -21,5 +21,5 @@ Trace traffic across microservices using Jaeger. Install using the [jaeger opera
 Apache Nifi can be used as the glue and backbone for all microservices. Nifi provides service mesh capabilities, transformers, security, dynamic throttling. [Read more...](nifi/README.md)
 
 # Monitoring
-- Deploy Grafana to visualize metrics and set alerts. [Read more...](monitoring/grafana/README.md)
+- Deploy Grafana, Prometheus, Node-exporter, Push gateway to visualize metrics and set alerts. [Read more...](monitoring/README.md)
 - Prometheus Operator [Read more...](https://operatorhub.io/operator/prometheus)
