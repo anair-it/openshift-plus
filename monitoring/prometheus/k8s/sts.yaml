@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  labels:
+    app: prometheus
+  name: prometheus
+  namespace: cluster-monitoring
+spec:
+  podManagementPolicy: Parallel
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: prometheus
+  serviceName: ''
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: prometheus
+      name: prometheus
+    spec:
+      containers:
+        - args:
+            - '--storage.tsdb.retention=6h'
+            - '--config.file=/etc/prometheus/prometheus.yml'
+          image: 'openshift/prometheus:v2.3.2'
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - '-c'
+                - >-
+                  set -euo pipefail;
+
+                  touch /tmp/prometheusconfig.hash;
+
+                  if [[ $(find /etc/prometheus -type f | sort | xargs md5sum |
+                  md5sum) != $(cat /tmp/prometheusconfig.hash) ]]; then
+                    find /etc/prometheus -type f | sort | xargs md5sum | md5sum > /tmp/prometheusconfig.hash;
+                    kill -HUP 1;
+                  fi
+            failureThreshold: 3
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: prometheus
+          ports:
+            - containerPort: 9090
+              name: prometheus
+              protocol: TCP
+          resources: {}
+          securityContext: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /etc/prometheus/prometheus.yml
+              name: prometheus-yml
+              subPath: prometheus.yml
+            - mountPath: /prometheus
+              name: prometheus-data
+            - mountPath: /var/run/secrets/kubernetes.io/scraper
+              name: prometheus-scraper-secret
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: prometheus
+      serviceAccountName: prometheus
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - emptyDir: {}
+          name: prometheus-data
+        - configMap:
+            defaultMode: 420
+            name: prometheus-config
+          name: prometheus-yml
+        - name: prometheus-scraper-secret
+          secret:
+            defaultMode: 420
+            secretName: prometheus-scraper
+  updateStrategy:
+    rollingUpdate:
+      partition: 0
+    type: RollingUpdate

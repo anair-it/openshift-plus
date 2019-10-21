@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    deprecated.daemonset.template.generation: '10'
+  labels:
+    app: prometheus-node-exporter
+    component: prometheus-node-exporter
+    provider: openshift
+    role: monitoring
+  name: prometheus-node-exporter
+  namespace: cluster-monitoring
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: prometheus-node-exporter
+      role: monitoring
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: prometheus-node-exporter
+        component: prometheus-node-exporter
+        provider: openshift
+        role: monitoring
+      name: prometheus-exporter
+    spec:
+      containers:
+        - args:
+            - '--path.procfs=/host/proc'
+            - '--path.sysfs=/host/sys'
+          image: 'openshift/prometheus-node-exporter:latest'
+          imagePullPolicy: IfNotPresent
+          name: node-exporter
+          ports:
+            - containerPort: 9100
+              hostPort: 9100
+              name: scrape
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 200m
+              memory: 50Mi
+            requests:
+              cpu: 100m
+              memory: 30Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /host/proc
+              name: proc
+              readOnly: true
+            - mountPath: /host/sys
+              name: sys
+              readOnly: true
+      dnsPolicy: ClusterFirst
+      hostNetwork: true
+      hostPID: true
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: prometheus-node-exporter
+      serviceAccountName: prometheus-node-exporter
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - hostPath:
+            path: /proc
+            type: ''
+          name: proc
+        - hostPath:
+            path: /sys
+            type: ''
+          name: sys
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
